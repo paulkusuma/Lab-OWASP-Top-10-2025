@@ -18,7 +18,13 @@ use App\Helpers\Lab;
 // Route::get('/lab-test', function () {
 //     return \App\Helpers\Lab::mode() ? 'LAB MODE AKTIF' : 'LAB MODE MATI';
 // });
-
+// Route::get('/lab-a02-check', function () {
+//     return [
+//         'env' => config('app.env'),
+//         'debug' => config('app.debug'),
+//         'lab_mode' => env('LAB_MODE'),
+//     ];
+// });
 /*
 |--------------------------------------------------------------------------
 | PUBLIC
@@ -28,6 +34,17 @@ Route::get('/', PeminjamBukuController::class);
 
 Auth::routes();
 
+Route::get('/lab-exception', function () {
+
+    // MODE AMAN → route tidak tersedia
+    if (!Lab::mode()) {
+        abort(404);
+    }
+
+    // LAB MODE → sengaja lempar exception
+    throw new Exception('A02 Security Misconfiguration');
+
+});
 /*
 |--------------------------------------------------------------------------
 | AUTHENTICATED USER
