@@ -34,6 +34,7 @@ Route::get('/', PeminjamBukuController::class);
 
 Auth::routes();
 
+// LAB A02
 Route::get('/lab-exception', function () {
 
     // MODE AMAN → route tidak tersedia
@@ -45,6 +46,16 @@ Route::get('/lab-exception', function () {
     throw new Exception('A02 Security Misconfiguration');
 
 });
+
+// LAB A03
+if (Lab::mode()) {
+    Route::get('/lab-supply-chain', function () {
+        return response()->json([
+            'category' => 'A03:2025 Software Supply Chain Failures',
+            'info' => Lab::supplyChainInfo(),
+        ]);
+    });
+}
 /*
 |--------------------------------------------------------------------------
 | AUTHENTICATED USER
